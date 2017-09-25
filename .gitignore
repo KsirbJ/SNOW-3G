@@ -1,2 +1,4 @@
 *.txt
-README.md
+README.txt
+*.o
+run

@@ -10,6 +10,7 @@ using namespace std;
 
 unsigned int lfsr[16] = {0};
 
+// The Rijndael S-box Sr
 int sr[256] =  
 	{0x63 ,0x7c ,0x77 ,0x7b ,0xf2 ,0x6b ,0x6f ,0xc5 ,0x30 ,0x01 ,0x67 ,0x2b ,0xfe ,0xd7 ,0xab ,0x76
 	,0xca ,0x82 ,0xc9 ,0x7d ,0xfa ,0x59 ,0x47 ,0xf0 ,0xad ,0xd4 ,0xa2 ,0xaf ,0x9c ,0xa4 ,0x72 ,0xc0
@@ -28,6 +29,7 @@ int sr[256] =
 	,0xe1 ,0xf8 ,0x98 ,0x11 ,0x69 ,0xd9 ,0x8e ,0x94 ,0x9b ,0x1e ,0x87 ,0xe9 ,0xce ,0x55 ,0x28 ,0xdf
 	,0x8c ,0xa1 ,0x89 ,0x0d ,0xbf ,0xe6 ,0x42 ,0x68 ,0x41 ,0x99 ,0x2d ,0x0f ,0xb0 ,0x54 ,0xbb ,0x16};
 
+// The S-Box Sq
 unsigned int sq[256] = 
 	{0x25, 0x24, 0x73, 0x67, 0xD7, 0xAE, 0x5C, 0x30, 0xA4, 0xEE, 0x6E, 0xCB, 0x7D, 0xB5, 0x82, 0xDB,
 	0xE4, 0x8E, 0x48, 0x49, 0x4F, 0x5D, 0x6A, 0x78, 0x70, 0x88, 0xE8, 0x5F, 0x5E, 0x84, 0x65, 0xE2,
@@ -197,7 +199,7 @@ void clock_lfsr(char mode, unsigned long F = 0){
 int main(int argc, char const *argv[]){
 
 	if(argc < 5){
-		cerr << "Program usage: ./p1 <key_file> <iv_file> <n> <output_file>" << endl;
+		cerr << "Program usage: " << argv[0] << " <key_file> <iv_file> <n> <output_file>" << endl;
 		return 1;
 	}
 
@@ -215,6 +217,7 @@ int main(int argc, char const *argv[]){
 
 	key_stream.close();
 
+	// Key is split in 4 32 bit parts
 	unsigned int k0 = strtoul(keys[0].c_str(), NULL, 16 );
 	unsigned int k1 = strtoul(keys[1].c_str(), NULL, 16 );
 	unsigned int k2 = strtoul(keys[2].c_str(), NULL, 16 );
@@ -229,7 +232,8 @@ int main(int argc, char const *argv[]){
 
 	iv_stream.close();
 
-    unsigned int iv0 = strtoul(ivs[0].c_str(), NULL, 16 );
+	// IV is split in 4 32 bit parts
+	unsigned int iv0 = strtoul(ivs[0].c_str(), NULL, 16 );
 	unsigned int iv1 = strtoul(ivs[1].c_str(), NULL, 16 );
 	unsigned int iv2 = strtoul(ivs[2].c_str(), NULL, 16 );
 	unsigned int iv3 = strtoul(ivs[3].c_str(), NULL, 16 );
@@ -269,13 +273,14 @@ int main(int argc, char const *argv[]){
 		clock_lfsr('k');
 	}
 
+	// Write to out file
 	ofstream of(out_file);
 	for(unsigned int i : keystream)
 		of << setfill('0') << setw(8) << hex << i << " ";
 
-	// Output 
-	for(unsigned int i : keystream)
-		cout << setfill('0') << setw(8) << hex << i << endl;
+	// Output for testing
+	// for(unsigned int i : keystream)
+	// 	cout << setfill('0') << setw(8) << hex << i << endl;
 
 	return 0;
 }
