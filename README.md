@@ -1,3 +1,8 @@
+# Simple SNOW 3G Stream Cipher Implementation
+
+This project implements the SNOW 3G stream cipher that's used to enncrypt data over 3G networks
+
+## Usage
 1. To compile run `make` or `make p1`
 2. To run the program run `./run <key_file> <iv_file> <N> <out_file>`
 	* key_file is a text file containing a 128 bit key split into 4 32 bit pieces. For example: 0xaaaaaaaa 0x1234bbbb 0xbbbbbbbb 0xcccccccc
