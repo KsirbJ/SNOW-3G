@@ -1,6 +1,6 @@
 # Simple SNOW 3G Stream Cipher Implementation
 
-This project implements the SNOW 3G stream cipher that's used to enncrypt data over 3G networks
+This project implements the SNOW 3G stream cipher that's used to enncrypt data over 4G/LTE networks
 
 ## Usage
 1. To compile run `make` or `make p1`
